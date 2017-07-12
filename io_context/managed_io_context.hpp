@@ -12,7 +12,7 @@ namespace serial
     class managed_io_context
     {
     public:
-        constexpr managed_io_context()
+        managed_io_context()
             : service_{}
             , async_provider_{new AsyncModel{&service_}}
         {
@@ -25,7 +25,7 @@ namespace serial
          *  its just there to combine the io_service with some work / workers.
          *  As boost::asio supports thread pools, coroutines, etc.
          */
-        constexpr asio::io_service* get_io_service() noexcept
+        asio::io_service* get_io_service() noexcept
         {
             return &service_;
         }

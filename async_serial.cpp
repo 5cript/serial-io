@@ -7,6 +7,7 @@ namespace serial
         : basic_serial{service, deviceName}
         , read_callback_inst_{}
         , read_timeout_timer_{service}
+        , bytes_ready_{0}
     {
         // this will ensure, that the timer does not fire right away when it it started
         // the timer is started on read, but the timeout will be set later in every do_read cycle.
@@ -21,7 +22,6 @@ namespace serial
                 check_deadline(&read_timeout_timer_, ec);
             }
         );
-
 
         do_read();
     }
@@ -54,6 +54,11 @@ namespace serial
                 read_callback_inst_(ec);
             }
         );
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    std::size_t asynchronous_serial::get_read_count() const
+    {
+        return bytes_ready_;
     }
 //---------------------------------------------------------------------------------------------------------------------
     void asynchronous_serial::check_deadline(boost::asio::deadline_timer* timer, boost::system::error_code const& ec)

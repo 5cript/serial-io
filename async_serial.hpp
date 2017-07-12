@@ -59,6 +59,11 @@ namespace serial
         std::basic_string <unsigned char> extractRead();
 
         /**
+         *  Returns bytes_ready_;
+         */
+        std::size_t get_read_count() const;
+
+        /**
          *  Sets the read callback, which is called when a read operation finishes.
          */
         void set_read_callback(read_callback const& new_read_callback);
