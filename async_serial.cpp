@@ -38,6 +38,11 @@ namespace serial
         read_callback_inst_ = new_read_callback;
     }
 //---------------------------------------------------------------------------------------------------------------------
+    void asynchronous_serial::clear_read_buffer()
+    {
+        bytes_ready_ = 0;
+    }
+//---------------------------------------------------------------------------------------------------------------------
     void asynchronous_serial::do_read()
     {
         // sets / resets the timer.
@@ -51,6 +56,8 @@ namespace serial
 
                 bytes_ready_ = bytes_transferred;
                 read_timeout_timer_.expires_from_now(boost::posix_time::pos_infin);
+
+                // must get all bytes from the read_buffer_
                 read_callback_inst_(ec);
             }
         );

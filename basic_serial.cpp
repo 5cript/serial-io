@@ -7,7 +7,7 @@ namespace serial
 //#####################################################################################################################
     basic_serial::basic_serial(asio::io_service& service, std::string const& deviceName)
         : con_{service, deviceName}
-        , read_buffer_(4096)
+        , read_buffer_(2048)
         , write_buffer_{}
     {
         if (!con_.is_open())
