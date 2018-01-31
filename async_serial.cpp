@@ -9,6 +9,8 @@ namespace serial
         , read_timeout_timer_{service}
         , bytes_ready_{0}
     {
+        if (!con_.is_open())
+            return;
         // this will ensure, that the timer does not fire right away when it it started
         // the timer is started on read, but the timeout will be set later in every do_read cycle.
         read_timeout_timer_.expires_at(boost::posix_time::pos_infin);
@@ -16,6 +18,9 @@ namespace serial
 //---------------------------------------------------------------------------------------------------------------------
     void asynchronous_serial::read()
     {
+        if (!con_.is_open())
+            throw std::runtime_error("connection is not open");
+
         read_timeout_timer_.async_wait(
             [this](boost::system::error_code const& ec)
             {

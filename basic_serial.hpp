@@ -31,6 +31,11 @@ namespace serial
         void close();
 
         /**
+         *  Returns whether the serial port is open or not.
+         */
+        bool is_open() const noexcept;
+
+        /**
          *  Copying is disabled
          */
         basic_serial& operator=(basic_serial const&) = delete;
